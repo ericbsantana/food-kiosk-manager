@@ -73,6 +73,11 @@ const KioskController = {
   },
   UPDATE: async (req: Request, res: Response) => {
     const id = req.params.id;
+    const validation = validationResult(req);
+
+    if (!validation.isEmpty()) {
+      return res.status(400).send({ message: "Invalid ObjectId" });
+    }
 
     try {
       const kioskToBePatched = await KioskService.updateById(id, req.body);
