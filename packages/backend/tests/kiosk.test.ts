@@ -157,4 +157,16 @@ describe("POST /kiosks", () => {
       "Kiosk opening time can't be null"
     );
   });
+
+  it('should return 400 and "Kiosk status should be open or closed" message when description is null', async () => {
+    const invalidKiosk = {
+      ...validKiosk,
+      isKioskClosed: "banana",
+    };
+
+    const response = await request(app).post("/kiosks").send(invalidKiosk);
+    expect(response.body.errors.isKioskClosed.msg).toBe(
+      "Kiosk status should be open or closed"
+    );
+  });
 });
