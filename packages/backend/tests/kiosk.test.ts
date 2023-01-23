@@ -107,5 +107,22 @@ describe("POST /kiosks", () => {
       "Description can't be null"
     );
   });
+
+  it("should return 400 and return multiple invalid fields with field and its error message", async () => {
+    const invalidKiosk = {
+      ...validKiosk,
+      description: null,
+      serialKey: null,
+    };
+
+    const response = await request(app).post("/kiosks").send(invalidKiosk);
+    expect(Object.keys(response.body.errors)).toEqual([
+      "description",
+      "serialKey",
+    ]);
+    expect(response.body.errors.description.msg).toBe(
+      "Description can't be null"
+    );
+    expect(response.body.errors.serialKey.msg).toBe("Serial key can't be null");
   });
 });
