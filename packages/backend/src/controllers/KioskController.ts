@@ -42,13 +42,20 @@ const KioskController = {
   },
   DELETE: async (req: Request, res: Response) => {
     const id = req.params.id;
-    const kioskToBeDeleted = await KioskService.deleteById(id);
 
-    if (kioskToBeDeleted === null) {
-      return res.status(404).send({ message: "Not found" });
+    try {
+      const kioskToBeDeleted = await KioskService.deleteById(id);
+
+      if (kioskToBeDeleted === null) {
+        return res.status(404).send({ message: "Not found" });
+      }
+
+      return res.status(200).send({ message: "Kiosk deleted successfully" });
+    } catch (error) {
+      return res
+        .status(502)
+        .send({ message: "Server error, please try again later" });
     }
-
-    return res.status(200).send({ message: "Kiosk deleted successfully" });
   },
 };
 
