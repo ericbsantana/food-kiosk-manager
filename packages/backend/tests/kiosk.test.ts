@@ -224,6 +224,16 @@ describe("POST /kiosks", () => {
     const response = await request(app).get("/kiosks");
     expect(response.status).toBe(502);
   });
+
+  it("should return 502 if something goes wrong with mongoose findById", async () => {
+    const kiosk = await createAKiosk();
+    jest
+      .spyOn(KioskService, "findById")
+      .mockRejectedValue(() => Promise.reject());
+
+    const response = await request(app).get(`/kiosks/${kiosk._id}`);
+    expect(response.status).toBe(502);
+  });
 });
 
 describe("DELETE /kiosks/:id", () => {
