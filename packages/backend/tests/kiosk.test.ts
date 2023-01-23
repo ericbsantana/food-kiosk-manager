@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import KioskModel from "../src/models/Kiosk.model";
 import { connectToDatabase, dropCollections, dropDatabase } from "./db";
 import IKiosk from "../src/interfaces/kiosk";
+import KioskService from "../src/services/kiosk.service";
 
 const validKiosk = {
   description: "This is the philosophers kiosk.",
@@ -18,6 +19,7 @@ const createAKiosk = async (kiosk: IKiosk = validKiosk) =>
 
 beforeAll(async () => {
   await connectToDatabase();
+  await jest.clearAllMocks();
 });
 
 afterAll(async () => {
@@ -205,5 +207,14 @@ describe("POST /kiosks", () => {
     expect(response.status).toBe(200);
     expect(response.body.message).toBe("Kiosk created successfully");
     expect(response.body.data).toEqual(kioskWithCorrectDate);
+  });
+
+  it("should return 502 if something goes wrong with mongoose create", async () => {
+    const spy = jest
+      .spyOn(KioskService, "createOne")
+      .mockRejectedValue(() => Promise.reject());
+
+    const response = await request(app).post("/kiosks").send(validKiosk);
+    expect(response.status).toBe(502);
   });
 });
