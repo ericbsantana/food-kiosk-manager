@@ -1,0 +1,5 @@
+{
+	"database": {
+		"url": "mongodb+srv://kiosk-manager:AGSEeFN2Sh70Y66A@cluster0.e2a3iak.mongodb.net/kiosk-management"
+	}
+}
