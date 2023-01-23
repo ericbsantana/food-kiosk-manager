@@ -40,3 +40,22 @@ describe("GET /kiosks", () => {
     expect(response.body.length).toBe(1);
   });
 });
+
+describe("GET /kiosks/:id", () => {
+  it("should return specific kiosk on GET /kiosks/:id", async () => {
+    const kiosk = await createAKiosk();
+
+    const kioskWithNormalizedFields = {
+      _id: kiosk._id.toString(),
+      description: kiosk.description,
+      serialKey: kiosk.serialKey,
+      __v: kiosk.__v,
+      isKioskClosed: kiosk.isKioskClosed,
+      storeClosesAt: dayjs(kiosk.storeClosesAt).toISOString(),
+      storeOpensAt: dayjs(kiosk.storeOpensAt).toISOString(),
+    };
+
+    const response = await request(app).get(`/kiosks/${kiosk._id}`);
+    expect(response.body).toEqual(kioskWithNormalizedFields);
+  });
+});
