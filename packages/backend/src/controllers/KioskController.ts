@@ -40,6 +40,12 @@ const KioskController = {
       return res.sendStatus(502);
     }
   },
+  DELETE: async (req: Request, res: Response) => {
+    const id = req.params.id;
+
+    await KioskService.deleteById(id);
+    return res.status(200).send();
+  },
 };
 
 export default KioskController;
