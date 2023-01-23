@@ -125,4 +125,36 @@ describe("POST /kiosks", () => {
     );
     expect(response.body.errors.serialKey.msg).toBe("Serial key can't be null");
   });
+
+  it("should return 400 and return all invalid fields and its error message", async () => {
+    const invalidKiosk = {
+      description: null,
+      isKioskClosed: null,
+      serialKey: null,
+      storeClosesAt: null,
+      storeOpensAt: null,
+    };
+
+    const response = await request(app).post("/kiosks").send(invalidKiosk);
+    expect(Object.keys(response.body.errors)).toEqual([
+      "description",
+      "serialKey",
+      "isKioskClosed",
+      "storeOpensAt",
+      "storeClosesAt",
+    ]);
+    expect(response.body.errors.description.msg).toBe(
+      "Description can't be null"
+    );
+    expect(response.body.errors.serialKey.msg).toBe("Serial key can't be null");
+    expect(response.body.errors.isKioskClosed.msg).toBe(
+      "Kiosk status can't be null"
+    );
+    expect(response.body.errors.storeClosesAt.msg).toBe(
+      "Kiosk closing time can't be null"
+    );
+    expect(response.body.errors.storeOpensAt.msg).toBe(
+      "Kiosk opening time can't be null"
+    );
+  });
 });
