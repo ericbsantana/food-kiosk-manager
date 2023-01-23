@@ -169,4 +169,22 @@ describe("POST /kiosks", () => {
       "Kiosk status should be open or closed"
     );
   });
+
+  it.each([
+    ["storeOpensAt", "Kiosk opening time should be a date"],
+    ["storeClosesAt", "Kiosk closing time should be a date"],
+  ])(
+    "should return 400 if %s is not a date and show %s message",
+    async (input, expected) => {
+      const invalidKiosk: { [key: string]: any } = { ...validKiosk };
+      invalidKiosk[input] = "banana";
+
+      const response = await request(app)
+        .post("/kiosks")
+        .send({ ...invalidKiosk });
+
+      expect(response.status).toBe(400);
+      expect(response.body.errors[input].msg).toBe(expected);
+    }
+  );
 });
