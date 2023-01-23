@@ -32,6 +32,8 @@ router.post(
   check("isKioskClosed")
     .notEmpty()
     .withMessage("Kiosk status can't be null")
+    .isBoolean()
+    .withMessage("Kiosk status should be open or closed")
     .bail(),
   check("storeOpensAt")
     .notEmpty()
