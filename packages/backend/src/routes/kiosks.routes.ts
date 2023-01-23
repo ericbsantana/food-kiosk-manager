@@ -54,11 +54,15 @@ router.post(
       return res.status(400).send({ errors: validation.mapped() });
     }
 
-    const createdKiosk = await KioskService.createOne(req.body);
+    try {
+      const createdKiosk = await KioskService.createOne(req.body);
 
-    return res
-      .status(200)
-      .send({ message: "Kiosk created successfully", data: createdKiosk });
+      return res
+        .status(200)
+        .send({ message: "Kiosk created successfully", data: createdKiosk });
+    } catch (err) {
+      return res.sendStatus(502);
+    }
   }
 );
 
