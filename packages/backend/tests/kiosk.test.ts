@@ -225,3 +225,17 @@ describe("POST /kiosks", () => {
     expect(response.status).toBe(502);
   });
 });
+
+describe("DELETE /kiosks/:id", () => {
+  it("should return 200 when Kiosk is deleted", async () => {
+    const kiosk = await createAKiosk();
+
+    const response = await request(app).delete(
+      `/kiosks/${kiosk._id.toString()}`
+    );
+    expect(response.status).toBe(200);
+
+    const kiosksAfterDelete = await KioskModel.find({});
+    expect(kiosksAfterDelete.length).toBe(0);
+  });
+});
