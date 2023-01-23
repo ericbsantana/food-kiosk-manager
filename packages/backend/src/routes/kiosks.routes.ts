@@ -14,8 +14,8 @@ router.get("/kiosks/:id", async (req: Request, res: Response) => {
   try {
     const kiosk = await KioskService.findById(id);
     res.status(200).send(kiosk);
-  } catch (err) {
-    res.sendStatus(400);
+  } catch (err: any) {
+    res.status(400).send({ message: err.message });
   }
 });
 

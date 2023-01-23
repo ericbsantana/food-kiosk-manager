@@ -8,7 +8,7 @@ const find = async (params: FilterQuery<IKiosk>) => {
 
 const findById = async (id: string) => {
   if (!mongoose.isValidObjectId(id)) {
-    throw new Error();
+    throw new Error("Invalid ObjectId");
   }
 
   return KioskModel.findById(id);
