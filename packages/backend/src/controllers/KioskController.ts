@@ -23,6 +23,11 @@ const KioskController = {
   },
   GET_BY_ID: async (req: Request, res: Response) => {
     const id = req.params.id;
+    const validation = validationResult(req);
+
+    if (!validation.isEmpty()) {
+      return res.status(400).send({ message: "Invalid ObjectId" });
+    }
 
     try {
       const kiosk = await KioskService.findById(id);
@@ -42,6 +47,11 @@ const KioskController = {
   },
   DELETE: async (req: Request, res: Response) => {
     const id = req.params.id;
+    const validation = validationResult(req);
+
+    if (!validation.isEmpty()) {
+      return res.status(400).send({ message: "Invalid ObjectId" });
+    }
 
     try {
       const kioskToBeDeleted = await KioskService.deleteById(id);
