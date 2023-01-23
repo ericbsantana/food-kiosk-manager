@@ -210,7 +210,7 @@ describe("POST /kiosks", () => {
   });
 
   it("should return 502 if something goes wrong with mongoose create", async () => {
-    const spy = jest
+    jest
       .spyOn(KioskService, "createOne")
       .mockRejectedValue(() => Promise.reject());
 
