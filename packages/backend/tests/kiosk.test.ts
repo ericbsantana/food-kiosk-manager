@@ -79,3 +79,10 @@ describe("GET /kiosks/:id", () => {
     expect(response.status).toEqual(expected);
   });
 });
+
+describe("POST /kiosks", () => {
+  it("should return 200 OK when creating kiosks", async () => {
+    const response = await request(app).post("/kiosks").send(validKiosk);
+    expect(response.status).toBe(200);
+  });
+});
