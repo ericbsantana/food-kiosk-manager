@@ -323,9 +323,9 @@ describe("PATCH /kiosks/:id", () => {
     expect(response.body.message).toBe("Server error, please try again later");
   });
 
-  // it('should return "Invalid ObjectId" error message when parameter is invalid', async () => {
-  //   const response = await request(app).patch(`/kiosks/${undefined}`);
-  //   expect(response.status).toBe(400);
-  //   expect(response.body.message).toBe("Invalid ObjectId");
-  // });
+  it('should return "Invalid ObjectId" error message when parameter is invalid', async () => {
+    const response = await request(app).patch(`/kiosks/${undefined}`);
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe("Invalid ObjectId");
+  });
 });
