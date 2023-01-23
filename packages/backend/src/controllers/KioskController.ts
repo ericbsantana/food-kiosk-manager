@@ -42,8 +42,12 @@ const KioskController = {
   },
   DELETE: async (req: Request, res: Response) => {
     const id = req.params.id;
+    const kioskToBeDeleted = await KioskService.deleteById(id);
 
-    await KioskService.deleteById(id);
+    if (kioskToBeDeleted === null) {
+      return res.status(404).send({ message: "Not found" });
+    }
+
     return res.status(200).send({ message: "Kiosk deleted successfully" });
   },
 };
