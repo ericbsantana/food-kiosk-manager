@@ -187,4 +187,23 @@ describe("POST /kiosks", () => {
       expect(response.body.errors[input].msg).toBe(expected);
     }
   );
+
+  it('should return 200 and "Kiosk created successfully" message when Kiosk is created', async () => {
+    const response = await request(app).post("/kiosks").send(validKiosk);
+    const kiosks = await KioskModel.find({});
+
+    const kioskWithCorrectDate = {
+      _id: kiosks[0]._id.toString(),
+      description: kiosks[0].description,
+      serialKey: kiosks[0].serialKey,
+      __v: kiosks[0].__v,
+      isKioskClosed: kiosks[0].isKioskClosed,
+      storeClosesAt: dayjs(kiosks[0].storeClosesAt).toISOString(),
+      storeOpensAt: dayjs(kiosks[0].storeOpensAt).toISOString(),
+    };
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe("Kiosk created successfully");
+    expect(response.body.data).toEqual(kioskWithCorrectDate);
+  });
 });
