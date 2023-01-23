@@ -38,11 +38,15 @@ router.post(
   check("storeOpensAt")
     .notEmpty()
     .withMessage("Kiosk opening time can't be null")
-    .bail(),
+    .bail()
+    .isISO8601()
+    .withMessage("Kiosk opening time should be a date"),
   check("storeClosesAt")
     .notEmpty()
     .withMessage("Kiosk closing time can't be null")
-    .bail(),
+    .bail()
+    .isISO8601()
+    .withMessage("Kiosk closing time should be a date"),
   async (req: Request, res: Response) => {
     const validation = validationResult(req);
 
