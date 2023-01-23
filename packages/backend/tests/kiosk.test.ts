@@ -58,4 +58,14 @@ describe("GET /kiosks/:id", () => {
     const response = await request(app).get(`/kiosks/${kiosk._id}`);
     expect(response.body).toEqual(kioskWithNormalizedFields);
   });
+
+  it.each([
+    [undefined, 400],
+    [null, 400],
+    ["b", 400],
+    [333, 400],
+  ])("should return 400 if id parameter is %s", async (input, expected) => {
+    const response = await request(app).get(`/kiosks/${input}`);
+    expect(response.status).toEqual(expected);
+  });
 });
