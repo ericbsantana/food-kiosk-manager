@@ -44,7 +44,7 @@ const KioskController = {
     const id = req.params.id;
 
     await KioskService.deleteById(id);
-    return res.status(200).send();
+    return res.status(200).send({ message: "Kiosk deleted successfully" });
   },
 };
 
