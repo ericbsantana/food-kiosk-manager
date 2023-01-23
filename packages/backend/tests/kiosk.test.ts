@@ -59,6 +59,11 @@ describe("GET /kiosks/:id", () => {
     expect(response.body).toEqual(kioskWithNormalizedFields);
   });
 
+  it('should return "Invalid ObjectId" error message when parameter is invalid', async () => {
+    const response = await request(app).get(`/kiosks/${undefined}`);
+    expect(response.body.message).toBe("Invalid ObjectId");
+  });
+
   it.each([
     [undefined, 400],
     [null, 400],
