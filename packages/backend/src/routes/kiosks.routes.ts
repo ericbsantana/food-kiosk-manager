@@ -17,5 +17,6 @@ router.delete(
   ObjectIdValidationMiddleware,
   KioskController.DELETE
 );
+router.patch("/kiosks/:id", KioskController.UPDATE);
 
 export default router;

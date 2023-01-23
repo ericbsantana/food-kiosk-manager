@@ -71,6 +71,11 @@ const KioskController = {
         .send({ message: "Server error, please try again later" });
     }
   },
+  UPDATE: async (req: Request, res: Response) => {
+    const id = req.params.id;
+    await KioskService.updateById(id, req.body);
+    return res.status(200).send({ message: "Kiosk patched successfully" });
+  },
 };
 
 export default KioskController;

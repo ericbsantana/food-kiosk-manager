@@ -15,6 +15,9 @@ const findById = async (id: string) => KioskModel.findById(id);
 
 const deleteById = async (id: string) => KioskModel.findByIdAndDelete(id);
 
-const KioskService = { findById, find, createOne, deleteById };
+const updateById = async (id: string, body: any) =>
+  KioskModel.findByIdAndUpdate(id, body);
+
+const KioskService = { findById, find, createOne, deleteById, updateById };
 
 export default KioskService;
