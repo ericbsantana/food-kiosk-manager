@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import KioskService from "../services/kiosk.service";
 import IException from "../interfaces/exception";
-import { check, validationResult } from "express-validator";
+import { validationResult } from "express-validator";
 import KioskValidationMiddleware from "../middlewares/KioskValidationMiddleware";
 
 const router = express.Router();
