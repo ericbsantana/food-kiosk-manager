@@ -256,4 +256,17 @@ describe("DELETE /kiosks/:id", () => {
     expect(response.status).toBe(404);
     expect(response.body.message).toBe("Not found");
   });
+
+  it('should return code 502 and "Server error, please try again later" message when deleteById rejects promise', async () => {
+    jest
+      .spyOn(KioskService, "deleteById")
+      .mockRejectedValue(() => Promise.reject());
+
+    const response = await request(app).delete(
+      `/kiosks/63cdf954b65cc96e2fcbe76f`
+    );
+
+    expect(response.status).toBe(502);
+    expect(response.body.message).toBe("Server error, please try again later");
+  });
 });
