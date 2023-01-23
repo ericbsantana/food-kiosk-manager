@@ -238,4 +238,13 @@ describe("DELETE /kiosks/:id", () => {
     const kiosksAfterDelete = await KioskModel.find({});
     expect(kiosksAfterDelete.length).toBe(0);
   });
+
+  it('should return "Kiosk deleted successfully" message when kiosk is deleted', async () => {
+    const kiosk = await createAKiosk();
+    const response = await request(app).delete(
+      `/kiosks/${kiosk._id.toString()}`
+    );
+
+    expect(response.body.message).toBe("Kiosk deleted successfully");
+  });
 });
