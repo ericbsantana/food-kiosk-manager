@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import KioskService from "../services/kiosk.service";
+import KioskService, { Error } from "../services/kiosk.service";
 
 const router = express.Router();
 
@@ -15,7 +15,8 @@ router.get("/kiosks/:id", async (req: Request, res: Response) => {
     const kiosk = await KioskService.findById(id);
     res.status(200).send(kiosk);
   } catch (err: any) {
-    res.status(400).send({ message: err.message });
+    const error: Error = err;
+    res.status(error.status).send({ message: error.message });
   }
 });
 
