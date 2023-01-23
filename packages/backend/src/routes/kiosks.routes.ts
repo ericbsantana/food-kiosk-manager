@@ -24,12 +24,12 @@ router.get("/kiosks/:id", async (req: Request, res: Response) => {
 
 router.post(
   "/kiosks",
-  check("description").notEmpty(),
+  check("description").notEmpty().withMessage("Description can't be null"),
   async (req: Request, res: Response) => {
     const validation = validationResult(req);
 
     if (!validation.isEmpty()) {
-      return res.sendStatus(400);
+      return res.status(400).send({ message: "Description can't be null" });
     }
 
     return res.sendStatus(200);
