@@ -217,4 +217,11 @@ describe("POST /kiosks", () => {
     const response = await request(app).post("/kiosks").send(validKiosk);
     expect(response.status).toBe(502);
   });
+
+  it("should return 502 if something goes wrong with mongoose find", async () => {
+    jest.spyOn(KioskService, "find").mockRejectedValue(() => Promise.reject());
+
+    const response = await request(app).get("/kiosks");
+    expect(response.status).toBe(502);
+  });
 });
