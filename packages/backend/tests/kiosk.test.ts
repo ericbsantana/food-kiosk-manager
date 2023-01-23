@@ -95,4 +95,14 @@ describe("POST /kiosks", () => {
     const response = await request(app).post("/kiosks").send(invalidKiosk);
     expect(response.status).toBe(400);
   });
+
+  it('should return 400 and "Description can\'t be null" message when description is null', async () => {
+    const invalidKiosk = {
+      ...validKiosk,
+      description: null,
+    };
+
+    const response = await request(app).post("/kiosks").send(invalidKiosk);
+    expect(response.body.message).toBe("Description can't be null");
+  });
 });
