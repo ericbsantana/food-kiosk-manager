@@ -269,4 +269,10 @@ describe("DELETE /kiosks/:id", () => {
     expect(response.status).toBe(502);
     expect(response.body.message).toBe("Server error, please try again later");
   });
+
+  it('should return "Invalid ObjectId" error message when parameter is invalid', async () => {
+    const response = await request(app).delete(`/kiosks/${undefined}`);
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe("Invalid ObjectId");
+  });
 });
