@@ -21,7 +21,6 @@ const createAKiosk = async (kiosk: IKiosk = validKiosk) =>
 
 beforeAll(async () => {
   await connectToDatabase();
-  await jest.clearAllMocks();
 });
 
 afterAll(async () => {
@@ -30,6 +29,11 @@ afterAll(async () => {
 
 afterEach(async () => {
   await dropCollections();
+});
+
+beforeEach(async () => {
+  await jest.clearAllMocks();
+  await jest.resetAllMocks();
 });
 
 describe("GET /kiosks", () => {
@@ -327,5 +331,21 @@ describe("PATCH /kiosks/:id", () => {
     const response = await request(app).patch(`/kiosks/${undefined}`);
     expect(response.status).toBe(400);
     expect(response.body.message).toBe("Invalid ObjectId");
+  });
+
+  it("should return 200 OK when kiosk is patched", async () => {
+    const kiosk = await createAKiosk();
+
+    const fieldsToPatch = {
+      description: "banana",
+      serialKey: "new-serial-key",
+      isKioskClosed: true,
+    };
+
+    const response = await request(app)
+      .patch(`/kiosks/${kiosk._id.toString()}`)
+      .send(fieldsToPatch);
+
+    expect(response.status).toBe(200);
   });
 });
