@@ -103,6 +103,9 @@ describe("POST /kiosks", () => {
     };
 
     const response = await request(app).post("/kiosks").send(invalidKiosk);
-    expect(response.body.message).toBe("Description can't be null");
+    expect(response.body.errors.description.msg).toBe(
+      "Description can't be null"
+    );
+  });
   });
 });
