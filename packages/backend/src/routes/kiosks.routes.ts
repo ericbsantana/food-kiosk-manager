@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import KioskService from "../services/kiosk.service";
 import IException from "../interfaces/exception";
+import { check, validationResult } from "express-validator";
 
 const router = express.Router();
 
@@ -21,8 +22,18 @@ router.get("/kiosks/:id", async (req: Request, res: Response) => {
   }
 });
 
-router.post("/kiosks", async (req: Request, res: Response) => {
-  return res.send(200);
-});
+router.post(
+  "/kiosks",
+  check("description").notEmpty(),
+  async (req: Request, res: Response) => {
+    const validation = validationResult(req);
+
+    if (!validation.isEmpty()) {
+      return res.sendStatus(400);
+    }
+
+    return res.sendStatus(200);
+  }
+);
 
 export default router;
