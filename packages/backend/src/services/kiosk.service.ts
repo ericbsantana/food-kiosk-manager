@@ -1,20 +1,7 @@
 import mongoose, { FilterQuery } from "mongoose";
 import KioskModel from "../models/Kiosk.model";
 import IKiosk from "../interfaces/kiosk";
-
-export interface Error {
-  status: number;
-  message: string;
-}
-
-export const Exception = function (
-  this: Error,
-  status: number,
-  message: string
-) {
-  this.status = status;
-  this.message = message;
-} as unknown as { new (status: number, message: string): Error };
+import Exception from "../errors/Exception";
 
 const find = async (params: FilterQuery<IKiosk>) => {
   return KioskModel.find(params);
