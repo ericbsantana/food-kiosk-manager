@@ -13,4 +13,9 @@ app.get("/kiosks", async (req: Request, res: Response) => {
   res.status(200).send(kiosks);
 });
 
+app.get("/kiosks/:id", async (req: Request, res: Response) => {
+  const kiosk = await KioskModel.findById({ _id: req.params.id });
+  res.status(200).send(kiosk);
+});
+
 export default app;
