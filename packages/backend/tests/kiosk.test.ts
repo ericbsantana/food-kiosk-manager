@@ -284,3 +284,16 @@ describe("DELETE /kiosks/:id", () => {
     expect(response.body.message).toBe("Invalid ObjectId");
   });
 });
+
+describe("PATCH /kiosks/:id", () => {
+  it("should return 200 when Kiosk is patched", async () => {
+    const kiosk = await createAKiosk();
+
+    const response = await request(app)
+      .patch(`/kiosks/${kiosk._id.toString()}`)
+      .send({ description: "banana" });
+
+    expect(response.status).toBe(200);
+  });
+
+});
