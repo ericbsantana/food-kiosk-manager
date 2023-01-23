@@ -11,19 +11,7 @@ const createOne = async (data: IKiosk) => {
   return KioskModel.create(data);
 };
 
-const findById = async (id: string) => {
-  if (!mongoose.isValidObjectId(id)) {
-    throw new Exception(400, "Invalid ObjectId");
-  }
-
-  const result = await KioskModel.findById(id);
-
-  if (result === null) {
-    throw new Exception(404, "Not found");
-  }
-
-  return result;
-};
+const findById = async (id: string) => KioskModel.findById(id);
 
 const deleteById = async (id: string) => KioskModel.findByIdAndDelete(id);
 

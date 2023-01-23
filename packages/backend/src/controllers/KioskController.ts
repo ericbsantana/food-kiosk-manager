@@ -31,10 +31,14 @@ const KioskController = {
 
     try {
       const kiosk = await KioskService.findById(id);
+
+      if (kiosk === null) {
+        return res.status(404).send();
+      }
+
       return res.status(200).send(kiosk);
     } catch (err: any) {
-      const error: IException = err;
-      return res.status(error.status).send({ message: error.message });
+      return res.status(502).send();
     }
   },
   GET: async (req: Request, res: Response) => {
