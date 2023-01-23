@@ -1,5 +1,5 @@
 import request from "supertest";
-import app from "../app";
+import app from "../src/app";
 
 describe("Main application", () => {
   it("should return 200 ok on GET /", async () => {
