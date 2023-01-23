@@ -6,8 +6,12 @@ import { check, validationResult } from "express-validator";
 const router = express.Router();
 
 router.get("/kiosks", async (req: Request, res: Response) => {
-  const kiosks = await KioskService.find({});
-  return res.status(200).send(kiosks);
+  try {
+    const kiosks = await KioskService.find({});
+    return res.status(200).send(kiosks);
+  } catch (err) {
+    return res.sendStatus(502);
+  }
 });
 
 router.get("/kiosks/:id", async (req: Request, res: Response) => {
