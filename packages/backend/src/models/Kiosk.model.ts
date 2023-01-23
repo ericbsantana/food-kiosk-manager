@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
+import IKiosk from "../interfaces/kiosk";
 
-const kioskSchema = new mongoose.Schema({
-  serialKey: String,
-  description: String,
-  isKioskClosed: Boolean,
-  storeOpensAt: Date,
-  storeClosesAt: Date,
+const kioskSchema = new mongoose.Schema<IKiosk>({
+  serialKey: { type: String, require: true },
+  description: { type: String, require: true },
+  isKioskClosed: { type: Boolean, require: true },
+  storeOpensAt: { type: Date, require: true },
+  storeClosesAt: { type: Date, require: true },
 });
 
-export default mongoose.model("kiosk", kioskSchema, "kiosk-management");
+export default mongoose.model<IKiosk>("kiosk", kioskSchema, "kiosk-management");
