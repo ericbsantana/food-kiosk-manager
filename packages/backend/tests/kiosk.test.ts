@@ -41,6 +41,13 @@ describe("GET /kiosks", () => {
     const response = await request(app).get("/kiosks");
     expect(response.body.length).toBe(1);
   });
+
+  it("should return 502 if something goes wrong with mongoose find", async () => {
+    jest.spyOn(KioskService, "find").mockRejectedValue(() => Promise.reject());
+
+    const response = await request(app).get("/kiosks");
+    expect(response.status).toBe(502);
+  });
 });
 
 describe("GET /kiosks/:id", () => {
@@ -79,6 +86,16 @@ describe("GET /kiosks/:id", () => {
   ])("should return 400 if id parameter is %s", async (input, expected) => {
     const response = await request(app).get(`/kiosks/${input}`);
     expect(response.status).toEqual(expected);
+  });
+
+  it("should return 502 if something goes wrong with mongoose findById", async () => {
+    const kiosk = await createAKiosk();
+    jest
+      .spyOn(KioskService, "findById")
+      .mockRejectedValue(() => Promise.reject());
+
+    const response = await request(app).get(`/kiosks/${kiosk._id}`);
+    expect(response.status).toBe(502);
   });
 });
 
@@ -215,23 +232,6 @@ describe("POST /kiosks", () => {
       .mockRejectedValue(() => Promise.reject());
 
     const response = await request(app).post("/kiosks").send(validKiosk);
-    expect(response.status).toBe(502);
-  });
-
-  it("should return 502 if something goes wrong with mongoose find", async () => {
-    jest.spyOn(KioskService, "find").mockRejectedValue(() => Promise.reject());
-
-    const response = await request(app).get("/kiosks");
-    expect(response.status).toBe(502);
-  });
-
-  it("should return 502 if something goes wrong with mongoose findById", async () => {
-    const kiosk = await createAKiosk();
-    jest
-      .spyOn(KioskService, "findById")
-      .mockRejectedValue(() => Promise.reject());
-
-    const response = await request(app).get(`/kiosks/${kiosk._id}`);
     expect(response.status).toBe(502);
   });
 });
