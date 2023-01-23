@@ -73,7 +73,12 @@ const KioskController = {
   },
   UPDATE: async (req: Request, res: Response) => {
     const id = req.params.id;
-    await KioskService.updateById(id, req.body);
+    const kioskToBePatched = await KioskService.updateById(id, req.body);
+
+    if (kioskToBePatched === null) {
+      return res.status(404).send({ message: "Not found" });
+    }
+
     return res.status(200).send({ message: "Kiosk patched successfully" });
   },
 };

@@ -304,4 +304,11 @@ describe("PATCH /kiosks/:id", () => {
 
     expect(response.body.message).toBe("Kiosk patched successfully");
   });
+
+  it('should return code 404 and "Not found" message when kiosk is not found to be patched', async () => {
+    const response = await request(app).patch(`/kiosks/${FAKE_OBJECT_ID}`);
+
+    expect(response.status).toBe(404);
+    expect(response.body.message).toBe("Not found");
+  });
 });
