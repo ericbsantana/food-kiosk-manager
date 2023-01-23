@@ -7,6 +7,10 @@ const find = async (params: FilterQuery<IKiosk>) => {
   return KioskModel.find(params);
 };
 
+const createOne = async (data: IKiosk) => {
+  return KioskModel.create(data);
+};
+
 const findById = async (id: string) => {
   if (!mongoose.isValidObjectId(id)) {
     throw new Exception(400, "Invalid ObjectId");
@@ -21,6 +25,6 @@ const findById = async (id: string) => {
   return result;
 };
 
-const KioskService = { findById, find };
+const KioskService = { findById, find, createOne };
 
 export default KioskService;
