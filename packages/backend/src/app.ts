@@ -1,6 +1,7 @@
 import { Request, Response, Express } from "express";
 import express from "express";
 import KioskModel from "./models/Kiosk.model";
+import mongoose from "mongoose";
 
 const app = express();
 
@@ -14,7 +15,13 @@ app.get("/kiosks", async (req: Request, res: Response) => {
 });
 
 app.get("/kiosks/:id", async (req: Request, res: Response) => {
-  const kiosk = await KioskModel.findById({ _id: req.params.id });
+  const id = req.params.id;
+
+  if (!mongoose.isValidObjectId(id)) {
+    return res.status(400).send();
+  }
+
+  const kiosk = await KioskModel.findById({ _id: id });
   res.status(200).send(kiosk);
 });
 
