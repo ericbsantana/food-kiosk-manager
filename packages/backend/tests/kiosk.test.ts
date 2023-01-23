@@ -14,6 +14,8 @@ const validKiosk = {
   storeOpensAt: dayjs().toDate(),
 };
 
+const FAKE_OBJECT_ID = "63cdf954b65cc96e2fcbe76f";
+
 const createAKiosk = async (kiosk: IKiosk = validKiosk) =>
   KioskModel.create(kiosk);
 
@@ -74,7 +76,7 @@ describe("GET /kiosks/:id", () => {
   });
 
   it("should return 404 if nothing is found", async () => {
-    const response = await request(app).get(`/kiosks/63cdf954b65cc96e2fcbe76f`);
+    const response = await request(app).get(`/kiosks/${FAKE_OBJECT_ID}`);
     expect(response.status).toBe(404);
   });
 
@@ -259,9 +261,7 @@ describe("DELETE /kiosks/:id", () => {
   });
 
   it('should return code 400 and "Not found" message when kiosk is not found to be deleted', async () => {
-    const response = await request(app).delete(
-      `/kiosks/63cdf954b65cc96e2fcbe76f`
-    );
+    const response = await request(app).delete(`/kiosks/${FAKE_OBJECT_ID}`);
 
     expect(response.status).toBe(404);
     expect(response.body.message).toBe("Not found");
@@ -272,9 +272,7 @@ describe("DELETE /kiosks/:id", () => {
       .spyOn(KioskService, "deleteById")
       .mockRejectedValue(() => Promise.reject());
 
-    const response = await request(app).delete(
-      `/kiosks/63cdf954b65cc96e2fcbe76f`
-    );
+    const response = await request(app).delete(`/kiosks/${FAKE_OBJECT_ID}`);
 
     expect(response.status).toBe(502);
     expect(response.body.message).toBe("Server error, please try again later");
