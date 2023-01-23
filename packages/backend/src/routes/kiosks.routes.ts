@@ -21,4 +21,8 @@ router.get("/kiosks/:id", async (req: Request, res: Response) => {
   }
 });
 
+router.post("/kiosks", async (req: Request, res: Response) => {
+  return res.send(200);
+});
+
 export default router;
