@@ -64,6 +64,11 @@ describe("GET /kiosks/:id", () => {
     expect(response.body.message).toBe("Invalid ObjectId");
   });
 
+  it("should return 404 if nothing is found", async () => {
+    const response = await request(app).get(`/kiosks/63cdf954b65cc96e2fcbe76f`);
+    expect(response.status).toBe(404);
+  });
+
   it.each([
     [undefined, 400],
     [null, 400],
