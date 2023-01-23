@@ -247,4 +247,13 @@ describe("DELETE /kiosks/:id", () => {
 
     expect(response.body.message).toBe("Kiosk deleted successfully");
   });
+
+  it('should return code 400 and "Not found" message when kiosk is not found to be deleted', async () => {
+    const response = await request(app).delete(
+      `/kiosks/63cdf954b65cc96e2fcbe76f`
+    );
+
+    expect(response.status).toBe(404);
+    expect(response.body.message).toBe("Not found");
+  });
 });
