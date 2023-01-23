@@ -21,7 +21,7 @@ app.get("/kiosks/:id", async (req: Request, res: Response) => {
     return res.status(400).send();
   }
 
-  const kiosk = await KioskModel.findById({ _id: id });
+  const kiosk = await KioskModel.findById(id);
   res.status(200).send(kiosk);
 });
 
