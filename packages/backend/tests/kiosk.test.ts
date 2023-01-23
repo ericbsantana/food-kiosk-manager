@@ -296,4 +296,12 @@ describe("PATCH /kiosks/:id", () => {
     expect(response.status).toBe(200);
   });
 
+  it('should return "Kiosk patched successfully" message when kiosk is patched', async () => {
+    const kiosk = await createAKiosk();
+    const response = await request(app).patch(
+      `/kiosks/${kiosk._id.toString()}`
+    );
+
+    expect(response.body.message).toBe("Kiosk patched successfully");
+  });
 });
