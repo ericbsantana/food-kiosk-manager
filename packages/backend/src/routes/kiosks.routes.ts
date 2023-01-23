@@ -24,12 +24,28 @@ router.get("/kiosks/:id", async (req: Request, res: Response) => {
 
 router.post(
   "/kiosks",
-  check("description").notEmpty().withMessage("Description can't be null"),
+  check("description")
+    .notEmpty()
+    .withMessage("Description can't be null")
+    .bail(),
+  check("serialKey").notEmpty().withMessage("Serial key can't be null").bail(),
+  check("isKioskClosed")
+    .notEmpty()
+    .withMessage("Kiosk status can't be null")
+    .bail(),
+  check("storeOpensAt")
+    .notEmpty()
+    .withMessage("Kiosk opening time can't be null")
+    .bail(),
+  check("storeClosesAt")
+    .notEmpty()
+    .withMessage("Kiosk closing time can't be null")
+    .bail(),
   async (req: Request, res: Response) => {
     const validation = validationResult(req);
 
     if (!validation.isEmpty()) {
-      return res.status(400).send({ message: "Description can't be null" });
+      return res.status(400).send({ errors: validation.mapped() });
     }
 
     return res.sendStatus(200);
