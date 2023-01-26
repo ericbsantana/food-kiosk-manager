@@ -84,8 +84,12 @@ const KioskController = {
       if (kioskToBePatched === null) {
         return res.status(404).send({ message: "Not found" });
       }
+      const response = {
+        message: "Kiosk patched successfully",
+        data: kioskToBePatched,
+      };
 
-      return res.status(200).send({ message: "Kiosk patched successfully" });
+      return res.status(200).send(response);
     } catch (error) {
       return res
         .status(502)
