@@ -1,10 +1,8 @@
 import cron from "node-cron";
-// import updateKiosksEveryHour from "../src/cron/cron";
 import dayjs from "dayjs";
 import IKiosk from "../src/interfaces/kiosk";
 import KioskModel from "../src/models/Kiosk.model";
 import { connectToDatabase, dropCollections, dropDatabase } from "./db";
-import updateKiosksEveryMinute from "../src/cron/cron";
 import KioskService from "../src/services/kiosk.service";
 
 beforeAll(async () => {
