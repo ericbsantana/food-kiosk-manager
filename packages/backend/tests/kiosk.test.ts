@@ -31,11 +31,6 @@ afterEach(async () => {
   await dropCollections();
 });
 
-beforeEach(async () => {
-  await jest.clearAllMocks();
-  await jest.resetAllMocks();
-});
-
 describe("GET /kiosks", () => {
   it("should return 200 on GET /kiosks", async () => {
     const response = await request(app).get("/kiosks");
@@ -347,5 +342,31 @@ describe("PATCH /kiosks/:id", () => {
       .send(fieldsToPatch);
 
     expect(response.status).toBe(200);
+  });
+
+  it("should return kiosk when it is patched", async () => {
+    const kiosk = await createAKiosk();
+
+    const fieldsToPatch = {
+      description: "banana",
+      serialKey: "new-serial-key",
+      isKioskClosed: true,
+    };
+
+    const response = await request(app)
+      .patch(`/kiosks/${kiosk._id.toString()}`)
+      .send(fieldsToPatch);
+
+    expect(response.status).toBe(200);
+    expect(response.body.data).toEqual({
+      ...{
+        _id: kiosk._id.toString(),
+        isKioskClosed: kiosk.isKioskClosed,
+        storeClosesAt: kiosk.storeClosesAt.toISOString(),
+        storeOpensAt: dayjs(kiosk.storeOpensAt).toISOString(),
+        __v: kiosk.__v,
+      },
+      ...fieldsToPatch,
+    });
   });
 });
