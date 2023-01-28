@@ -1,7 +1,6 @@
-import mongoose, { FilterQuery } from "mongoose";
+import { FilterQuery } from "mongoose";
 import KioskModel from "../models/Kiosk.model";
 import IKiosk from "../interfaces/kiosk";
-import Exception from "../errors/Exception";
 import dayjs from "dayjs";
 import BluebirdPromise from "bluebird";
 

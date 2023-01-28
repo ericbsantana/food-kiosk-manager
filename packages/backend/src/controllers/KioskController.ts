@@ -1,7 +1,6 @@
 import { validationResult } from "express-validator";
 import KioskService from "../services/kiosk.service";
 import { Request, Response } from "express";
-import IException from "../interfaces/exception";
 
 const KioskController = {
   POST: async (req: Request, res: Response) => {
