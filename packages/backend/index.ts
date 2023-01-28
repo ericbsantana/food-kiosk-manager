@@ -4,7 +4,7 @@ import config from "config";
 import KioskService from "./src/services/kiosk.service";
 import { ToadScheduler, SimpleIntervalJob, AsyncTask } from "toad-scheduler";
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 const databaseUrl: string = config.get("database.url");
 
