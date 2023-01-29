@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import CreateKiosk from "./pages/CreateKiosk";
+import EditKiosk from "./pages/EditKiosk";
 import Home from "./pages/Home";
 
 const router = createBrowserRouter([
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
   {
     path: "/create",
     element: <CreateKiosk />,
+  },
+  {
+    path: "/edit/:id",
+    element: <EditKiosk />,
   },
 ]);
 
