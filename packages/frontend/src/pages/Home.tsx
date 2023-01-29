@@ -1,7 +1,6 @@
 import axios from "axios";
 import useSWR from "swr";
 import Table from "../components/Table";
-import { PlusIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 import { Fragment } from "react";
 
@@ -9,7 +8,7 @@ const fetcher = (endpoint: string) =>
   axios.get(`http://localhost:3001${endpoint}`).then((res) => res.data);
 
 const App = () => {
-  const { data = [], isLoading, error } = useSWR("/kiosks", fetcher);
+  const { data = [], isLoading, error, mutate } = useSWR("/kiosks", fetcher);
 
   if (isLoading) {
     return null;
@@ -29,7 +28,7 @@ const App = () => {
         </div>
       </div>
       <div>
-        <Table data={data} />
+        <Table data={data} mutate={mutate} />
       </div>
     </Fragment>
   );

@@ -1,8 +1,34 @@
+import axios from "axios";
 import dayjs from "dayjs";
 import { FC, useMemo } from "react";
+import { Link } from "react-router-dom";
 import { useTable } from "react-table";
+import { KeyedMutator } from "swr";
 
-const Table: FC<{ data: any }> = ({ data = [] }) => {
+const Table: FC<{ data: any; mutate: KeyedMutator<any> }> = ({
+  data = [],
+  mutate,
+}) => {
+  const deleteKiosk = async ({
+    _id,
+    description,
+  }: {
+    _id: string;
+    description: string;
+  }) => {
+    if (
+      window.confirm(`You sure you want to delete "${description}" kiosk?`) ===
+      true
+    ) {
+      try {
+        await axios.delete(`http://localhost:3001/kiosks/${_id}`);
+        mutate();
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
+
   const columns = useMemo(
     () => [
       {
@@ -59,6 +85,12 @@ const Table: FC<{ data: any }> = ({ data = [] }) => {
                 {column.render("Header")}
               </th>
             ))}
+            <th
+              scope="col"
+              className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+            >
+              Actions
+            </th>
           </tr>
         ))}
       </thead>
@@ -80,6 +112,19 @@ const Table: FC<{ data: any }> = ({ data = [] }) => {
                   </td>
                 );
               })}
+              <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                <button
+                  onClick={() => {
+                    deleteKiosk({
+                      _id: row.values._id,
+                      description: row.values.description,
+                    });
+                  }}
+                >
+                  Delete
+                </button>{" "}
+                / <Link to={`/edit/${row.values._id}`}>Edit</Link>
+              </td>
             </tr>
           );
         })}
