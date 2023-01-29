@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .text-input {
+    @apply text-sm rounded-lg block w-full p-3 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-neutral-500 focus:border-neutral-500;
+  }
+
+  .button {
+    @apply text-white bg-neutral-600 hover:bg-neutral-700 focus:ring-2 focus:outline-none focus:ring-neutral-500 font-medium rounded-md text-sm px-5 py-3 text-center;
+  }
+}
