@@ -2,6 +2,7 @@ import axios, { AxiosError } from "axios";
 import dayjs from "dayjs";
 import { Fragment } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const CreateKiosk = () => {
   const {
@@ -10,6 +11,8 @@ const CreateKiosk = () => {
     formState: { errors },
     setError,
   } = useForm();
+
+  const navigate = useNavigate();
 
   const onSubmit = async (data: any) => {
     const { storeClosesAt, storeOpensAt } = data;
@@ -37,6 +40,7 @@ const CreateKiosk = () => {
       await axios
         .post("http://localhost:3001/kiosks", dataToBeSent)
         .then((response) => response.data);
+      navigate("/");
     } catch (error: any) {
       const res: AxiosError<any> = error;
       if (res.response) {
