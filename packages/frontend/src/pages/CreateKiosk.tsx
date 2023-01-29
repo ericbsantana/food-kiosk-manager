@@ -123,9 +123,18 @@ const CreateKiosk = () => {
                 </span>
               )}
             </div>
-            <button type="submit" className="button">
-              Submit
-            </button>
+            <div className="space-x-5">
+              <button
+                type="button"
+                onClick={() => navigate("/")}
+                className="button"
+              >
+                Cancel
+              </button>
+              <button type="submit" className="button">
+                Submit
+              </button>
+            </div>
           </div>
         </form>
       </div>
