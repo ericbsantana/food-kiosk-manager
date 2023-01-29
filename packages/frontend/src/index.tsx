@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
+import CreateKiosk from "./pages/CreateKiosk";
 import Home from "./pages/Home";
 
 const router = createBrowserRouter([
@@ -11,7 +12,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/create",
-    element: <div>Create!</div>,
+    element: <CreateKiosk />,
   },
 ]);
 
