@@ -1,3 +1,5 @@
+import axios, { AxiosError } from "axios";
+import dayjs from "dayjs";
 import { Fragment } from "react";
 import { useForm } from "react-hook-form";
 
@@ -6,10 +8,47 @@ const CreateKiosk = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm();
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = async (data: any) => {
+    const { storeClosesAt, storeOpensAt } = data;
+    const splittedStoreOpensAt = storeOpensAt.split(":");
+    const splittedStoreClosesAt = storeClosesAt.split(":");
+
+    const formattedStoreOpensAt = dayjs()
+      .set("hour", splittedStoreOpensAt[0])
+      .set("minute", splittedStoreOpensAt[1])
+      .toDate();
+
+    const formattedStoreClosesAt = dayjs()
+      .set("hour", splittedStoreClosesAt[0])
+      .set("minute", splittedStoreClosesAt[1])
+      .toDate();
+
+    const dataToBeSent = {
+      ...data,
+      isKioskClosed: true,
+      storeClosesAt: formattedStoreClosesAt,
+      storeOpensAt: formattedStoreOpensAt,
+    };
+
+    try {
+      await axios
+        .post("http://localhost:3001/kiosks", dataToBeSent)
+        .then((response) => response.data);
+    } catch (error: any) {
+      const res: AxiosError<any> = error;
+      if (res.response) {
+        const responseErrors = res.response.data.errors;
+        Object.keys(responseErrors).forEach((key) => {
+          setError(key, {
+            type: "custom",
+            message: responseErrors[key].msg,
+          });
+        });
+      }
+    }
   };
 
   return (
@@ -29,6 +68,11 @@ const CreateKiosk = () => {
                 className="text-input"
                 {...register("serialKey")}
               />
+              {errors.serialKey && (
+                <span className="text-red-400">
+                  {errors.serialKey.message?.toString()}
+                </span>
+              )}
             </div>
             <div>
               <label className="block mb-2 text-sm font-medium text-white">
@@ -39,6 +83,11 @@ const CreateKiosk = () => {
                 className="text-input"
                 {...register("description")}
               />
+              {errors.description && (
+                <span className="text-red-400">
+                  {errors.description.message?.toString()}
+                </span>
+              )}
             </div>
             <div>
               <label className="block mb-2 text-sm font-medium text-white">
@@ -49,6 +98,11 @@ const CreateKiosk = () => {
                 className="text-input"
                 {...register("storeOpensAt")}
               />
+              {errors.storeOpensAt && (
+                <span className="text-red-400">
+                  {errors.storeOpensAt.message?.toString()}
+                </span>
+              )}
             </div>
             <div>
               <label className="block mb-2 text-sm font-medium text-white">
@@ -59,6 +113,11 @@ const CreateKiosk = () => {
                 className="text-input"
                 {...register("storeClosesAt")}
               />
+              {errors.storeClosesAt && (
+                <span className="text-red-400">
+                  {errors.storeClosesAt.message?.toString()}
+                </span>
+              )}
             </div>
             <button type="submit" className="button">
               Submit
