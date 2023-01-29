@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
@@ -16,11 +16,19 @@ const router = createBrowserRouter([
   },
 ]);
 
+const Wrapper: FC<{ children?: React.ReactNode }> = ({ children }) => (
+  <div className="h-screen w-full bg-neutral-900 text-white p-10 space-y-5">
+    {children}
+  </div>
+);
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Wrapper>
+      <RouterProvider router={router} />
+    </Wrapper>
   </React.StrictMode>
 );
