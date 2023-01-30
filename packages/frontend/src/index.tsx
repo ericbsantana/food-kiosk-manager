@@ -5,12 +5,14 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import CreateKiosk from "./pages/CreateKiosk";
 import EditKiosk from "./pages/EditKiosk";
+import ErrorPage from "./pages/Error";
 import Home from "./pages/Home";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+    errorElement: <ErrorPage />,
   },
   {
     path: "/create",
