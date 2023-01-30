@@ -27,8 +27,12 @@ const EditKiosk = () => {
 
     try {
       if (_id) {
-        await editKiosk(_id, dataToPost);
+        const response = await editKiosk(_id, dataToPost);
         navigate("/");
+        enqueueSnackbar(response.message, {
+          variant: "success",
+          preventDuplicate: true,
+        });
       }
     } catch (error: any) {
       const res: AxiosError<any> = error;

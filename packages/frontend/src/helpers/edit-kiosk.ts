@@ -2,7 +2,7 @@ import axios from "axios";
 
 const editKiosk = async (_id: string, dataToPost: any) => {
   try {
-    await axios
+    return axios
       .patch(`http://localhost:3001/kiosks/${_id}`, dataToPost)
       .then((response) => response.data);
   } catch (err) {
