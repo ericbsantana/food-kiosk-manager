@@ -1,4 +1,3 @@
-import cron from "node-cron";
 import dayjs from "dayjs";
 import IKiosk from "../src/interfaces/kiosk";
 import KioskModel from "../src/models/Kiosk.model";
@@ -29,16 +28,6 @@ const createAKiosk = async (kiosk: IKiosk = validKiosk) =>
   KioskModel.create(kiosk);
 
 describe("Cron job testing", () => {
-  it("cron job should be called every 60 seconds", async () => {
-    jest.useFakeTimers();
-    const callback = jest.fn();
-    cron.schedule("* * * * *", callback);
-    expect(callback).toHaveBeenCalledTimes(0);
-    jest.advanceTimersByTime(60000);
-    expect(callback).toHaveBeenCalledTimes(1);
-    jest.useRealTimers();
-  });
-
   it("should close kiosks accordingly", async () => {
     const openedKioskBeforeUpdate = await createAKiosk({
       ...validKiosk,
