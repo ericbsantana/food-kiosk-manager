@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import createKiosk from "../helpers/create-kiosk";
 import formatKioskData from "../helpers/format-kiosk-data";
+import { Heading } from "../components/Heading";
 
 const CreateKiosk = () => {
   const {
@@ -45,7 +46,7 @@ const CreateKiosk = () => {
   return (
     <Fragment>
       <div>
-        <h1 className="text-center text-4xl">Create a new Kiosk</h1>
+        <Heading>Create a new Kiosk</Heading>
       </div>
       <div className="flex justify-center">
         <form className="w-1/3" onSubmit={handleSubmit(onSubmit)}>

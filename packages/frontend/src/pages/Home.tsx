@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Fragment } from "react";
 import { fetcher } from "../helpers/fetcher";
 import { Spinner } from "../components/Spinner";
+import { Heading } from "../components/Heading";
 
 const Home = () => {
   const { data = [], isLoading, error, mutate } = useSWR("/kiosks", fetcher);
@@ -19,8 +20,8 @@ const Home = () => {
   if (error) {
     return (
       <div className="h-full flex justify-center flex-col content-center text-center space-y-5">
-        <h1 className="text-5xl font-bold">Oops!</h1>
-        <h1 className="text-3xl">Could not get data.</h1>
+        <Heading bold>Oops!</Heading>
+        <Heading>Could not get data.</Heading>
         <div>
           <button className="button" onClick={() => mutate()}>
             Refresh data
@@ -34,8 +35,8 @@ const Home = () => {
     <Fragment>
       <div className="text-center space-y-5">
         <div>
-          <h1 className="text-4xl">Welcome to our</h1>
-          <h1 className="text-4xl font-bold">Kiosk Management</h1>
+          <Heading>Welcome to our</Heading>
+          <Heading bold>Kiosk Management</Heading>
         </div>
         <div>
           <Link type="button" to="/create" className="button">

@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import editKiosk from "../helpers/edit-kiosk";
 import formatKioskData from "../helpers/format-kiosk-data";
 import { useSnackbar } from "notistack";
+import { Heading } from "../components/Heading";
 
 const EditKiosk = () => {
   const {
@@ -78,7 +79,7 @@ const EditKiosk = () => {
   return (
     <Fragment>
       <div>
-        <h1 className="text-center text-4xl">Edit an existing Kiosk</h1>
+        <Heading>Edit an existing Kiosk</Heading>
       </div>
       <div className="flex justify-center">
         <form className="w-1/3" onSubmit={handleSubmit(onSubmit)}>
