@@ -48,33 +48,32 @@ const EditKiosk = () => {
     }
   };
 
-  const loadFormData = async () => {
-    try {
-      const response = await axios
-        .get(`http://localhost:3001/kiosks/${_id}`)
-        .then((response) => response.data);
-
-      Object.keys(response).forEach((key) => {
-        if (["storeOpensAt", "storeClosesAt"].includes(key)) {
-          setValue(key, dayjs(response[key]).format("HH:mm"));
-          return;
-        }
-
-        setValue(key, response[key]);
-      });
-    } catch (error: any) {
-      const res: AxiosError<any> = error;
-      enqueueSnackbar(res.response?.data.message || res.message, {
-        variant: "error",
-        preventDuplicate: true,
-      });
-      navigate("/");
-    }
-  };
-
   useEffect(() => {
+    const loadFormData = async () => {
+      try {
+        const response = await axios
+          .get(`http://localhost:3001/kiosks/${_id}`)
+          .then((response) => response.data);
+
+        Object.keys(response).forEach((key) => {
+          if (["storeOpensAt", "storeClosesAt"].includes(key)) {
+            setValue(key, dayjs(response[key]).format("HH:mm"));
+            return;
+          }
+
+          setValue(key, response[key]);
+        });
+      } catch (error: any) {
+        const res: AxiosError<any> = error;
+        enqueueSnackbar(res.response?.data.message || res.message, {
+          variant: "error",
+          preventDuplicate: true,
+        });
+        navigate("/");
+      }
+    };
     loadFormData();
-  }, [loadFormData]);
+  }, [_id, enqueueSnackbar, navigate, setValue]);
 
   return (
     <Fragment>
