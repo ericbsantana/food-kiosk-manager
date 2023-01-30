@@ -3,6 +3,8 @@ import dayjs from "dayjs";
 import { Fragment, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
+import editKiosk from "../helpers/edit-kiosk";
+import formatKioskData from "../helpers/format-kiosk-data";
 
 const EditKiosk = () => {
   const {
@@ -18,32 +20,13 @@ const EditKiosk = () => {
   const { id: _id } = useParams();
 
   const onSubmit = async (data: any) => {
-    const { storeClosesAt, storeOpensAt } = data;
-    const splittedStoreOpensAt = storeOpensAt.split(":");
-    const splittedStoreClosesAt = storeClosesAt.split(":");
-
-    const formattedStoreOpensAt = dayjs()
-      .set("hour", splittedStoreOpensAt[0])
-      .set("minute", splittedStoreOpensAt[1])
-      .toDate();
-
-    const formattedStoreClosesAt = dayjs()
-      .set("hour", splittedStoreClosesAt[0])
-      .set("minute", splittedStoreClosesAt[1])
-      .toDate();
-
-    const dataToBeSent = {
-      ...data,
-      isKioskClosed: true,
-      storeClosesAt: formattedStoreClosesAt,
-      storeOpensAt: formattedStoreOpensAt,
-    };
+    const dataToPost = formatKioskData(data);
 
     try {
-      await axios
-        .patch(`http://localhost:3001/kiosks/${_id}`, dataToBeSent)
-        .then((response) => response.data);
-      navigate("/");
+      if (_id) {
+        await editKiosk(_id, dataToPost);
+        navigate("/");
+      }
     } catch (error: any) {
       const res: AxiosError<any> = error;
       if (res.response) {
