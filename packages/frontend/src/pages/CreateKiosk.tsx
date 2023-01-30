@@ -3,6 +3,8 @@ import dayjs from "dayjs";
 import { Fragment } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import createKiosk from "../helpers/create-kiosk";
+import formatKioskData from "../helpers/format-kiosk-data";
 
 const CreateKiosk = () => {
   const {
@@ -15,31 +17,10 @@ const CreateKiosk = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (data: any) => {
-    const { storeClosesAt, storeOpensAt } = data;
-    const splittedStoreOpensAt = storeOpensAt.split(":");
-    const splittedStoreClosesAt = storeClosesAt.split(":");
-
-    const formattedStoreOpensAt = dayjs()
-      .set("hour", splittedStoreOpensAt[0])
-      .set("minute", splittedStoreOpensAt[1])
-      .toDate();
-
-    const formattedStoreClosesAt = dayjs()
-      .set("hour", splittedStoreClosesAt[0])
-      .set("minute", splittedStoreClosesAt[1])
-      .toDate();
-
-    const dataToBeSent = {
-      ...data,
-      isKioskClosed: true,
-      storeClosesAt: formattedStoreClosesAt,
-      storeOpensAt: formattedStoreOpensAt,
-    };
+    const dataToPost = formatKioskData(data);
 
     try {
-      await axios
-        .post("http://localhost:3001/kiosks", dataToBeSent)
-        .then((response) => response.data);
+      await createKiosk(dataToPost);
       navigate("/");
     } catch (error: any) {
       const res: AxiosError<any> = error;
