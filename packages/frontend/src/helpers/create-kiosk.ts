@@ -2,7 +2,7 @@ import axios from "axios";
 
 const createKiosk = async (dataToPost: any) => {
   try {
-    await axios
+    return axios
       .post("http://localhost:3001/kiosks", dataToPost)
       .then((response) => response.data);
   } catch (err) {

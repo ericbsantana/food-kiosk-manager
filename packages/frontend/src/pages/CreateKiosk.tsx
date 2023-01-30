@@ -1,5 +1,6 @@
 import axios, { AxiosError } from "axios";
 import dayjs from "dayjs";
+import { useSnackbar } from "notistack";
 import { Fragment } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -16,12 +17,18 @@ const CreateKiosk = () => {
 
   const navigate = useNavigate();
 
+  const { enqueueSnackbar } = useSnackbar();
+
   const onSubmit = async (data: any) => {
     const dataToPost = formatKioskData(data);
 
     try {
-      await createKiosk(dataToPost);
+      const response = await createKiosk(dataToPost);
       navigate("/");
+      enqueueSnackbar(response.message, {
+        variant: "success",
+        preventDuplicate: true,
+      });
     } catch (error: any) {
       const res: AxiosError<any> = error;
       if (res.response) {
