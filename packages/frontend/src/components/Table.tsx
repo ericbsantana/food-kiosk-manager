@@ -4,6 +4,7 @@ import { FC, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useTable } from "react-table";
 import { KeyedMutator } from "swr";
+import { Button } from "./Button";
 
 const Table: FC<{ data: any; mutate: KeyedMutator<any> }> = ({
   data = [],
@@ -113,17 +114,21 @@ const Table: FC<{ data: any; mutate: KeyedMutator<any> }> = ({
                 );
               })}
               <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                <button
-                  onClick={() => {
-                    deleteKiosk({
-                      _id: row.values._id,
-                      description: row.values.description,
-                    });
-                  }}
-                >
-                  Delete
-                </button>{" "}
-                / <Link to={`/edit/${row.values._id}`}>Edit</Link>
+                <div className="space-x-5">
+                  <Button
+                    onClick={() => {
+                      deleteKiosk({
+                        _id: row.values._id,
+                        description: row.values.description,
+                      });
+                    }}
+                  >
+                    Delete
+                  </Button>
+                  <Link to={`/edit/${row.values._id}`}>
+                    <Button>Edit</Button>
+                  </Link>
+                </div>
               </td>
             </tr>
           );

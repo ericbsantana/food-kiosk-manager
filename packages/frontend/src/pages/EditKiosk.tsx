@@ -7,6 +7,7 @@ import editKiosk from "../helpers/edit-kiosk";
 import formatKioskData from "../helpers/format-kiosk-data";
 import { useSnackbar } from "notistack";
 import { Heading } from "../components/Heading";
+import { Button } from "../components/Button";
 
 const EditKiosk = () => {
   const {
@@ -145,16 +146,16 @@ const EditKiosk = () => {
               )}
             </div>
             <div className="space-x-5">
-              <button
+              <Button
                 type="button"
                 onClick={() => navigate("/")}
                 className="button"
               >
                 Cancel
-              </button>
-              <button type="submit" className="button">
+              </Button>
+              <Button type="submit" className="button">
                 Submit
-              </button>
+              </Button>
             </div>
           </div>
         </form>

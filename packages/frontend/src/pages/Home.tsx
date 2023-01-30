@@ -5,6 +5,7 @@ import { Fragment } from "react";
 import { fetcher } from "../helpers/fetcher";
 import { Spinner } from "../components/Spinner";
 import { Heading } from "../components/Heading";
+import { Button } from "../components/Button";
 
 const Home = () => {
   const { data = [], isLoading, error, mutate } = useSWR("/kiosks", fetcher);
@@ -23,9 +24,7 @@ const Home = () => {
         <Heading bold>Oops!</Heading>
         <Heading>Could not get data.</Heading>
         <div>
-          <button className="button" onClick={() => mutate()}>
-            Refresh data
-          </button>
+          <Button onClick={() => mutate()}>Refresh data</Button>
         </div>
       </div>
     );

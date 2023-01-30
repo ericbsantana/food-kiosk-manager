@@ -1,4 +1,5 @@
 import { useRouteError, useNavigate } from "react-router-dom";
+import { Button } from "../components/Button";
 
 const ErrorPage = () => {
   const error: any = useRouteError();
@@ -10,15 +11,14 @@ const ErrorPage = () => {
       <p>Sorry, an unexpected error has occurred.</p>
       <p>{error.statusText}</p>
       <div>
-        <button
+        <Button
           type="button"
-          className="button"
           onClick={() => {
             navigate("/");
           }}
         >
           Back to home
-        </button>
+        </Button>
       </div>
     </div>
   );

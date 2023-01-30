@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import createKiosk from "../helpers/create-kiosk";
 import formatKioskData from "../helpers/format-kiosk-data";
 import { Heading } from "../components/Heading";
+import { Button } from "../components/Button";
 
 const CreateKiosk = () => {
   const {
@@ -112,16 +113,16 @@ const CreateKiosk = () => {
               )}
             </div>
             <div className="space-x-5">
-              <button
+              <Button
                 type="button"
                 onClick={() => navigate("/")}
                 className="button"
               >
                 Cancel
-              </button>
-              <button type="submit" className="button">
+              </Button>
+              <Button type="submit" className="button">
                 Submit
-              </button>
+              </Button>
             </div>
           </div>
         </form>
