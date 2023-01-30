@@ -2,7 +2,9 @@
 
 The project contains two packages: `backend` and `frontend`. The `backend` is a Node project and the `frontend` is a React project.
 
-The `backend` is an Express application developed with TDD and. The `frontend` is a React application created with TailwindCSS and React Router. These are the main dependencies of these projects.
+The `backend` is an Express application developed using TDD. The `frontend` is a React application created with TailwindCSS and React Router. These are the main dependencies of these projects.
+
+Took me **26 hours to finish this project**, accordingly to [git-hours](https://github.com/kimmobrunfeldt/git-hours).
 
 ## How to install
 
