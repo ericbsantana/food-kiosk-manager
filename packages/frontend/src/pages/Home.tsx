@@ -7,11 +7,25 @@ import { Fragment } from "react";
 const fetcher = (endpoint: string) =>
   axios.get(`http://localhost:3001${endpoint}`).then((res) => res.data);
 
-const App = () => {
+const Home = () => {
   const { data = [], isLoading, error, mutate } = useSWR("/kiosks", fetcher);
 
   if (isLoading) {
     return null;
+  }
+
+  if (error) {
+    return (
+      <div className="h-full flex justify-center flex-col content-center text-center space-y-5">
+        <h1 className="text-5xl font-bold">Oops!</h1>
+        <h1 className="text-3xl">Could not get data.</h1>
+        <div>
+          <button className="button" onClick={() => mutate()}>
+            Refresh data
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -34,4 +48,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Home;
