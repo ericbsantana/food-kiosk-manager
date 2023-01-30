@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import editKiosk from "../helpers/edit-kiosk";
 import formatKioskData from "../helpers/format-kiosk-data";
+import { useSnackbar } from "notistack";
 
 const EditKiosk = () => {
   const {
@@ -18,6 +19,8 @@ const EditKiosk = () => {
   const navigate = useNavigate();
 
   const { id: _id } = useParams();
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const onSubmit = async (data: any) => {
     const dataToPost = formatKioskData(data);
@@ -57,6 +60,11 @@ const EditKiosk = () => {
       });
     } catch (error: any) {
       const res: AxiosError<any> = error;
+      enqueueSnackbar(res.response?.data.message || res.message, {
+        variant: "error",
+        preventDuplicate: true,
+      });
+      navigate("/");
     }
   };
 

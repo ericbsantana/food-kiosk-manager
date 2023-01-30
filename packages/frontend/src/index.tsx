@@ -1,3 +1,4 @@
+import { SnackbarProvider } from "notistack";
 import React, { FC } from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -32,8 +33,10 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <Wrapper>
-      <RouterProvider router={router} />
-    </Wrapper>
+    <SnackbarProvider>
+      <Wrapper>
+        <RouterProvider router={router} />
+      </Wrapper>
+    </SnackbarProvider>
   </React.StrictMode>
 );
