@@ -3,6 +3,7 @@ import useSWR from "swr";
 import Table from "../components/Table";
 import { Link } from "react-router-dom";
 import { Fragment } from "react";
+import { fetcher } from "../helpers/fetcher";
 
 const fetcher = (endpoint: string) =>
   axios.get(`http://localhost:3001${endpoint}`).then((res) => res.data);
